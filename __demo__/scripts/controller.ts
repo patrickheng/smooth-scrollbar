@@ -90,4 +90,9 @@ if (window.innerWidth < 600) {
   controller.close();
 }
 
+
+// setInterval(()=>{
+//   scrollbars[0].render()
+// }, 16)
+
 export { controller };

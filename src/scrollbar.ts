@@ -376,7 +376,9 @@ export class Scrollbar implements I.Scrollbar {
     this._listeners.clear();
 
     this.setMomentum(0, 0);
-    cancelAnimationFrame(this._renderID);
+    if(this.options.autoRender) {
+      cancelAnimationFrame(this._renderID);
+    }
 
     if (this._observer) {
       this._observer.disconnect();
@@ -463,6 +465,10 @@ export class Scrollbar implements I.Scrollbar {
     return res;
   }
 
+  render() {
+    this._render();
+  }
+
   private _render() {
     const {
       _momentum,
@@ -484,7 +490,10 @@ export class Scrollbar implements I.Scrollbar {
       plugin.onRender(remain);
     });
 
-    this._renderID = requestAnimationFrame(this._render.bind(this));
+
+    if (this.options.autoRender) {
+      this._renderID = requestAnimationFrame(this._render.bind(this));
+    }
   }
 
   private _nextTick(direction: 'x' | 'y'): { momentum: number, position: number } {
